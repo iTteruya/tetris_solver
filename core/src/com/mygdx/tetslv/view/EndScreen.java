@@ -16,14 +16,17 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.mygdx.tetslv.TetriSolver;
 
-public class MenuScreen extends AbstractScreen {
+public class EndScreen extends AbstractScreen {
 
-    private static boolean solverON = false;
     private Stage stage;
     private Image image;
+    private int score;
+    private boolean solverStatus;
 
-    public MenuScreen(TetriSolver solver) {
+    EndScreen(TetriSolver solver, int score, boolean solverStatus) {
         super(solver);
+        this.score = score;
+        this.solverStatus = solverStatus;
         stage = new Stage(new ExtendViewport(640, 480));
         Gdx.input.setInputProcessor(stage);
     }
@@ -39,50 +42,41 @@ public class MenuScreen extends AbstractScreen {
         stage.addActor(table);
 
         Skin skin = new Skin(Gdx.files.internal("shade_skin\\uiskin.json"));
-        TextButton start = new TextButton(null, skin);
-        start.setLabel(new Label("Start", skin.get("title-plain", Label.LabelStyle.class)));
-        start.setColor(Color.VIOLET);
-        start.getLabel().setAlignment(Align.center);
-        TextButton solverStatus = new TextButton(null, skin, "toggle");
-        solverStatus.setLabel(new Label("Solver", skin.get("title-plain", Label.LabelStyle.class)));
-        solverStatus.getLabel().setAlignment(Align.center);
-        solverStatus.setColor(Color.VIOLET);
 
-        solverStatus.addListener(new ChangeListener() {
+        TextButton menu = new TextButton(null, skin);
+        menu.setColor(Color.VIOLET);
+        menu.setLabel(new Label("Menu", skin.get("title-plain", Label.LabelStyle.class)));
+        menu.getLabel().setAlignment(Align.center);
+
+        menu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                solverON = !solverON;
+                solver.setScreen(new MenuScreen(solver));
             }
         });
 
-        start.addListener(new ChangeListener() {
+        TextButton restart = new TextButton(null, skin);
+        restart.setColor(Color.VIOLET);
+        restart.setLabel(new Label("Restart", skin.get("title-plain", Label.LabelStyle.class)));
+        restart.getLabel().setAlignment(Align.center);
+        restart.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if ((solverON)) {
-                    solverON = false;
-                    solver.setScreen(new SolverSettingsScreen(solver));
-                } else {
-                    solver.setScreen(new GameScreen(solver, 0,false));
-                }
+                if (solverStatus) solver.setScreen(new SolverSettingsScreen(solver));
+                else solver.setScreen(new GameScreen(solver, 0, false));
             }
         });
 
 
-        table.add(start).width(stage.getWidth() / 3f).height(stage.getHeight() * 0.1f).fillX().uniformX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(solverStatus).height(stage.getHeight() * 0.1f).fillX().uniformX();
+        Label gameOver = new Label("Your Score: " + score, skin, "title-plain");
+        gameOver.setAlignment(Align.center);
 
-
-    }
-
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
-
+        table.add(gameOver);
+        table.row().pad(10,0,0,10);
+        table.add(restart).width(stage.getWidth() / 3f).height(stage.getHeight() * 0.1f).fillX().uniformX();
+        table.row().pad(10,0,0,10).row();
+        table.add(menu).height(stage.getHeight() * 0.1f).fillX().uniformX();
+        table.row();
     }
 
     @Override
@@ -92,7 +86,15 @@ public class MenuScreen extends AbstractScreen {
     }
 
     @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.draw();
+    }
+
+    @Override
     public void dispose() {
+        image.remove();
         stage.dispose();
     }
 }

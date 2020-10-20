@@ -1,9 +1,10 @@
 package com.mygdx.tetslv.view;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Screen;
 import com.mygdx.tetslv.TetriSolver;
 
-public abstract  class AbstractScreen implements Screen {
+public abstract  class AbstractScreen extends ApplicationAdapter implements Screen {
 
     TetriSolver solver;
 

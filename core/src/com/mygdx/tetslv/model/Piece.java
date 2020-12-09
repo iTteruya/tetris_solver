@@ -39,6 +39,11 @@ public class Piece {
         init(i, j);
     }
 
+    public Piece(int i, int j, Enum<Type> pieceType) {
+                    this.pieceType = pieceType;
+        init(i, j);
+    }
+
     public Piece(Piece piece) {
         set(piece);
     }
@@ -242,7 +247,7 @@ public class Piece {
         return currentColumn;
     }
 
-    private int[][] getMatrix() {
+    public int[][] getMatrix() {
         return matrix;
     }
 

@@ -1,14 +1,15 @@
 package com.mygdx.tetslv.model;
 
 import java.util.ArrayList;
-import static com.mygdx.tetslv.model.GameField.NUM_COLUMNS;
-import static com.mygdx.tetslv.model.GameField.NUM_ROWS;
+
 
 public class Strategist {
     private ArrayList<Integer> scoreList;
     private Piece piece;
     private int[][] oldMatrix;
     private int[][] newMatrix;
+    private int rows;
+    private int columns;
 
 
     public Strategist(GameField oldGameField, GameField newGameField, Piece piece) {
@@ -16,18 +17,22 @@ public class Strategist {
         oldMatrix = oldGameField.getMatrix();
         newMatrix = newGameField.getMatrix();
         scoreList = new ArrayList<>();
+        rows = oldMatrix.length;
+        columns = oldMatrix[0].length;
         setHolesScore();
         setFullLineScore();
         setHeightScore();
-
     }
 
+    public Strategist(ArrayList<Integer> scoreList) {
+        this.scoreList = scoreList;
+    }
 
     public Piece getPiece() {
         return piece;
     }
 
-    private ArrayList<Integer> getScoreList() {
+    public ArrayList<Integer> getScoreList() {
         return scoreList;
     }
 
@@ -61,12 +66,12 @@ public class Strategist {
 
     private int countLines(int[][] matrix) {
         int lines = 0;
-        for (int i = 0; i < NUM_ROWS; i++) {
+        for (int i = 0; i < rows; i++) {
             int cells = 0;
-            for (int j = 0; j < NUM_COLUMNS; j++) {
+            for (int j = 0; j < columns; j++) {
                 if (matrix[i][j] == 1) cells++;
             }
-            if (cells >= NUM_COLUMNS) lines++;
+            if (cells >= columns) lines++;
         }
         return lines;
     }
@@ -80,10 +85,10 @@ public class Strategist {
 
     private int getHeight(int[][] matrix) {
         int h = 0;
-        for (int i = NUM_ROWS - 1; i >= 0; i--) {
-            for (int j = 0; j < NUM_COLUMNS; j++) {
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = 0; j < columns; j++) {
                 if (matrix[i][j] == 1) {
-                    return NUM_ROWS - h;
+                    return rows - h;
                 }
             }
             h++;
@@ -101,10 +106,10 @@ public class Strategist {
 
     private int countHoles(int[][] matrix) {
         int holesCount = 0;
-        for (int i = 0; i < NUM_ROWS; i++) {
+        for (int i = 0; i < rows; i++) {
             boolean holeExist = false;
-            for (int j = NUM_COLUMNS - 2; j >= 0; j--) {
-                if (i + 1 < NUM_COLUMNS) {
+            for (int j = columns - 2; j >= 0; j--) {
+                if (i + 1 < columns) {
                     if ((matrix[i + 1][j] == 1|| holeExist) && matrix[i][j] == 0) {
                         holeExist = true;
                         holesCount++;

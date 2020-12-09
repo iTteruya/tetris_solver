@@ -36,6 +36,12 @@ public class GameField extends Actor {
         }
     }
 
+    public GameField(int[][] matrix){
+        rows = matrix.length;
+        columns = matrix[0].length;
+        this.matrix = Arrays.copyOf(matrix, rows);
+    }
+
     public void reset(){
         rows = NUM_ROWS;
         columns = NUM_COLUMNS;
@@ -96,7 +102,7 @@ public class GameField extends Actor {
                     break;
                 }
             }
-            if (counter >= NUM_COLUMNS && !lineIsFilled) {
+            if (counter >= columns && !lineIsFilled) {
                 lineIsFilled = true;
                 if (solverON) score--;
                 else score++;
@@ -122,7 +128,7 @@ public class GameField extends Actor {
         this.score = score;
     }
 
-    int[][] getMatrix() {
+    public int[][] getMatrix() {
         return matrix;
     }
 

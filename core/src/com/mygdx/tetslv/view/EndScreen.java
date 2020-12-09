@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.mygdx.tetslv.TetriSolver;
+import com.mygdx.tetslv.TetrisSolver;
 
 public class EndScreen extends AbstractScreen {
 
@@ -23,7 +23,7 @@ public class EndScreen extends AbstractScreen {
     private int score;
     private boolean solverStatus;
 
-    EndScreen(TetriSolver solver, int score, boolean solverStatus) {
+    EndScreen(TetrisSolver solver, int score, boolean solverStatus) {
         super(solver);
         this.score = score;
         this.solverStatus = solverStatus;

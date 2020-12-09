@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.mygdx.tetslv.TetriSolver;
+import com.mygdx.tetslv.TetrisSolver;
 
 
 public class SolverSettingsScreen extends AbstractScreen {
@@ -24,7 +24,7 @@ public class SolverSettingsScreen extends AbstractScreen {
     private Image image;
     private TextField input;
 
-    SolverSettingsScreen(TetriSolver solver) {
+    SolverSettingsScreen(TetrisSolver solver) {
         super(solver);
         stage = new Stage(new ExtendViewport(640, 480));
         Gdx.input.setInputProcessor(stage);
@@ -47,7 +47,7 @@ public class SolverSettingsScreen extends AbstractScreen {
         input = new TextField(null, textFieldStyle);
         input.setAlignment(Align.center);
         input.setTextFieldFilter(filter);
-        input.setMaxLength(2);
+        input.setMaxLength(5);
         input.setMessageText("Set Number of Lines");
         input.setColor(Color.GRAY);
         TextButton start = new TextButton(null, skin);

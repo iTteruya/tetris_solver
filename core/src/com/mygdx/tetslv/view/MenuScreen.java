@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.mygdx.tetslv.TetriSolver;
+import com.mygdx.tetslv.TetrisSolver;
 
 public class MenuScreen extends AbstractScreen {
 
@@ -22,7 +22,7 @@ public class MenuScreen extends AbstractScreen {
     private Stage stage;
     private Image image;
 
-    public MenuScreen(TetriSolver solver) {
+    public MenuScreen(TetrisSolver solver) {
         super(solver);
         stage = new Stage(new ExtendViewport(640, 480));
         Gdx.input.setInputProcessor(stage);
@@ -72,9 +72,7 @@ public class MenuScreen extends AbstractScreen {
         table.row().pad(10, 0, 10, 0);
         table.add(solverStatus).height(stage.getHeight() * 0.1f).fillX().uniformX();
 
-
     }
-
 
     @Override
     public void render(float delta) {
@@ -95,4 +93,5 @@ public class MenuScreen extends AbstractScreen {
     public void dispose() {
         stage.dispose();
     }
+
 }

@@ -61,5 +61,4 @@ public class TetrisTest {
         Assert.assertTrue(piece1.canPlace(0));
     }
 
-
 }
